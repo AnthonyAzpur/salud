@@ -1,0 +1,211 @@
+<ng-template #EditarImagen>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left"> <i class="pe-7s-plus btn-icon-wrapper"> </i> Edición de Carne</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()"
+            onclick="Limpiartalcancelar()" id="closeModal">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-6 col-md-6 col-sm-6">
+                <image-cropper
+                    [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="3 / 4"
+                    format="png"
+                    (imageCropped)="imageCropped($event)"
+                    (imageLoaded)="imageLoaded($event)"
+                    (cropperReady)="cropperReady()"
+                    (loadImageFailed)="loadImageFailed()"
+                ></image-cropper>
+            </div>
+            <div class="col-6 col-md-6 col-sm-6">
+                <div>
+                    <img [src]="croppedImage" class="img-responsive" style="width: 100%;"/>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-sm-12">
+                <div>
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-primary" (click)="GuardarCambiosImagen()">Guardar Cambios</button>
+                        <button type="button" class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<button (click)="openModal(EditarImagen, 'modal-xl')" style="display: none;" id="btnmodalimagen">x</button>
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0">Crear - Mascota</h4>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Mascotas</a></li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Nueva Mascota</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="card card-h-100">
+                    <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="col-md-12" style="text-align: -webkit-center;">
+                                                <div class="text-center" style="width:170px">
+                                                    <img [src]="imageUrl" class="img-fluid" alt="Responsive image">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 mt-4" style="top: 270px;padding-left: 7px;">
+                                                <input class="form-control form-control-sm" id="fileimagenup" type="file" (change)="onFileSelected($event)" accept="image/*">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-floating">
+                                                            <select class="form-select"
+                                                                [(ngModel)]="p_esp_id" data-choices-sorting="true" (change)="ListarRaza()">
+                                                                <option selected="" value="0">Seleccione...</option>
+                                                                <option *ngFor="let data of datosTipoEspecie"
+                                                                    value="{{data.esp_id}}">{{data.esp_descri}}</option>
+                                                            </select>
+                                                            <label>Especie</label>
+                                                        </div>
+                                                        <div>
+                                                            <!-- <div class="text-danger">
+                                                                Campo obligatorio</div> -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-floating">
+                                                                <select class="form-select" [(ngModel)]="p_anr_id" data-choices-sorting="true">
+                                                                <option selected="" value="0">Seleccione...</option>
+                                                                <option *ngFor="let data of datosTipoRaza"
+                                                                value="{{data.anr_id}}">{{data.anr_descri}}</option>
+                                                            </select>
+                                                                <label>Raza</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-floating">
+                                                                <select class="form-select"
+                                                                [(ngModel)]="p_ans_id"
+                                                                data-choices-sorting="true">
+                                                                <option selected="" value="0">Seleccione...</option>
+                                                                <option *ngFor="let data of datosTipoSexo"
+                                                                value="{{data.ans_id}}">{{data.ans_descri}}</option>
+                                                            </select>
+                                                                <label>Sexo</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 mt-2">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <label for="colFormLabelSm"
+                                                            class="col-form-label col-form-label-sm">Estirilizado?<span class="text-danger"> *</span></label>
+                                                        <div class="form-check form-switch mb-3" dir="ltr">
+                                                            <input type="checkbox" class="form-check-input" [(ngModel)]="p_ani_esteri" checked="" (change)="ChangeEsteri()">
+                                                            <label class="col-form-label-sm">{{confsiesteri}}</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="form-floating">
+                                                            <input [(ngModel)]="p_ani_nombre" type="text" class="form-control form-control-sm" style="text-transform: uppercase;">
+                                                            <label>Nombre Mascota</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <label for="colFormLabelSm"
+                                                            class="col-form-label col-form-label-sm">Fallecido?<span class="text-danger"> *</span></label>
+                                                        <div class="form-check form-switch mb-3" dir="ltr">
+                                                            <input type="checkbox" class="form-check-input" [(ngModel)]="p_ani_muerto" checked="" (change)="ChangeMuerto()">
+                                                            <label class="col-form-label-sm">{{confsimuerto}}</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 mt-2">
+                                                <div class="row">
+
+                                                    <div class="col-md-2">
+                                                            <div class="form-floating">
+                                                                <input [(ngModel)]="p_ani_edadan" type="text" class="form-control form-control-sm" (keypress)="validarNumero($event)">
+                                                                <label>Edad</label>
+                                                            </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                            <div class="form-floating">
+                                                                <input [(ngModel)]="p_ani_numojo" type="text" class="form-control form-control-sm" (keypress)="validarNumero($event)">
+                                                                <label>Ojos</label>
+                                                            </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-2">
+                                                        <div class="form-floating">
+                                                            <input [(ngModel)]="p_ani_pesnet" type="text" class="form-control form-control-sm" (keypress)="validarNumero($event)">
+                                                            <label>Peso(kg)</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-floating">
+                                                            <input [(ngModel)]="p_ani_canpat" type="text" class="form-control form-control-sm" (keypress)="validarNumero($event)">
+                                                            <label>Patas</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-floating">
+                                                            <input [(ngModel)]="p_ani_tamalt" type="text" class="form-control form-control-sm" (keypress)="validarNumero($event)">
+                                                            <label>Alto(cm)</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-floating">
+                                                            <input [(ngModel)]="p_ani_tamlar" type="text" class="form-control form-control-sm" (keypress)="validarNumero($event)">
+                                                            <label>Largo(cm)</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col-md-12 mt-2">
+                                                <div class="row">
+                                                    <div class="text-end">
+                                                        <button (click)="GuardarMascota()" type="button" class="btn btn-primary" style="margin-right: 5px;"> <i class=""></i>Guardar</button>
+                                                        <button type="button" class="btn btn-danger" [routerLink]="['/mascota']">Cancelar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-square-spin" [fullScreen]="false">
+    <p style="color: white"> Buscando información... </p>
+</ngx-spinner>
+<app-toast></app-toast>

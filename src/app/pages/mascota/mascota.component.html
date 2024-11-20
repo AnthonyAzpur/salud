@@ -1,0 +1,138 @@
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0">FILTROS DE BUSQUEDA</h4>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Personas</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card p-2">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-1">
+                                  <label class="col-form-label">ESPECIE:</label>
+                                </div>
+                                <div class="col-2">
+                                    <select class="form-select form-select-sm" [(ngModel)]="p_esp_id" data-choices-sorting="true" (change)="ListarRaza()">
+                                        <option selected="" value="0">Seleccione...</option>
+                                        <option *ngFor="let data of datosTipoEspecie"
+                                            value="{{data.esp_id}}">{{data.esp_descri}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-1">
+                                  <label class="col-form-label">RAZA:</label>
+                                </div>
+                                <div class="col-2">
+                                    <select class="form-select form-select-sm" [(ngModel)]="p_anr_id" data-choices-sorting="true">
+                                        <option selected="" value="0">Seleccione...</option>
+                                        <option *ngFor="let data of datosTipoRaza"
+                                            value="{{data.anr_id}}">{{data.anr_descri}}</option>
+                                    </select>
+                                </div> 
+                                <div class="col-1">
+                                    <label class="col-form-label">SEXO:</label>
+                                </div>
+                                <div class="col-2">
+                                    <!-- <ng-select style="border: 1px solid #b9b9b9 !important;">
+                                        <ng-option *ngFor="let pais of datosPais" [value]="pais.pai_id">{{pais.pai_descri}}</ng-option>
+                                     </ng-select> -->
+                                     <select class="form-select form-select-sm" data-choices-sorting="true" [(ngModel)]="p_ans_id">
+                                        <option selected="" value="0">Seleccione...</option>
+                                        <option *ngFor="let data of datosTipoSexo"
+                                            value="{{data.ans_id}}">{{data.ans_descri}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-1">
+                                  <label class="col-form-label">NOMBRE</label>
+                                </div>
+                                <div class="col-2">
+                                  <input type="text" class="form-control form-control-sm" [(ngModel)]="p_ani_nombre" style="text-transform: uppercase;">
+                                </div>
+                            </div>
+                            <!-- <div class="row g-3 pt-2 align-items-center">
+                                <div class="col-1">
+                                  <label class="col-form-label">Apellido Paterno</label>
+                                </div>
+                                <div class="col-5">
+                                  <input type="text" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-1">
+                                  <label class="col-form-label">Apellido Materno</label>
+                                </div>
+                                <div class="col-5">
+                                  <input type="text" class="form-control form-control-sm">
+                                </div>
+                            </div> -->
+                            <div class="row pt-3">
+                                <div class="col-sm-auto">
+                                    <button type="button" (click)="ListarAnimal()" class="btn btn-primary btn-label btn-sm"><i class="ri-search-line label-icon align-middle fs-16 me-2"></i> Buscar</button>
+                                </div>
+                                <div class="col-sm-auto">
+                                    <button type="button" [routerLink]="['/mascota/crear-mascota']" class="btn btn-info btn-label btn-sm"><i class="mdi mdi-plus label-icon align-middle fs-16 me-2"></i> Nuevo</button>
+                                </div>
+                                <div class="col-sm-auto">
+                                    <button type="button" class="btn btn-success btn-label btn-sm" id="ExportarExcel" (click)="descargaExcel()"><i class="ri-markup-line label-icon align-middle fs-16 me-2"></i> Excel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-h-100">
+                        <div class="card-body">
+                            <!-- <button [routerLink]="['/persona/crear-persona']" type="button"
+                                class="btn btn-soft-primary btn-label mb-3"><i
+                                    class="bx bx-user-plus label-icon fs-16"></i> Crear Persona</button> -->
+                            <div>
+                                <table id="tablaAplicacion" datatable [dtOptions]="dtOptions"
+                                [dtTrigger]="dtTrigger" class="row-border hover cell-border compact stripe">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col" class="text-center">N°</th>
+                                            <th scope="col" class="text-center">NOMBRE</th>
+                                            <th scope="col" class="text-center">ESPECIE</th>
+                                            <th scope="col" class="text-center">RAZA</th>
+                                            <th scope="col" class="text-center">SEXO</th>
+                                            <th scope="col" class="text-center">EDAD</th>
+                                            <th scope="col" class="text-center">ESTADO</th>
+                                            <th scope="col" class="text-center">ACCIONES</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of dataAnimal;let idx = index"
+                                            class="text-center">
+                                            <td>{{idx + 1}}</td>
+                                            <td>{{ data.ani_nombre }}</td>
+                                            <td>{{ data.esp_descri }}</td>
+                                            <td>{{ data.anr_descri }}</td>
+                                            <td>{{ data.ans_descri }}</td>
+                                            <td>{{ data.ani_edadan }}</td>
+                                            <td>{{ data.ani_estado }}</td>
+                                            <td><button type="button" (click)="RoutesNavigateAnimalPropietario(data.ani_id)" class="btn btn-primary btn-sm"><i class="bx bx-user fs-10"></i></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-square-spin" [fullScreen]="false">
+    <p style="color: white"> Buscando información... </p>
+</ngx-spinner>

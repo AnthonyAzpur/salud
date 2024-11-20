@@ -1,0 +1,220 @@
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card overflow-hidden">
+                        <div class="rounded profile-basic position-relative" style="background-image: url('assets/images/profile-bg.jpg');background-size: cover;background-position: center;">
+                            <div class="bg-overlay bg-primary"></div>
+                        </div>
+                        <div class="card-body">
+                            <div class="pt-3">
+                                <div class="row justify-content-between gy-4">
+                                    <div class="col-xl-2 col-lg-2">
+                                        <div class="mt-n7" style="text-align: center;">
+                                            <img src="{{ani_imgfot}}" alt="" class="avatar-xlg p-1" style="width: 150px; border-radius: 30px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-8 col-lg-8 pt-3">
+                                        <h5 class="fs-23 text-capitalize">{{ani_nombre}}</h5>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 pt-3 text-center">
+                                        <button type="button" (click)="openModal(AsignarAnimalPropietario,'modal-lg')" class="btn btn-success btn-label btn-md"><i class="ri-home-smile-fill label-icon align-middle fs-16 me-2"></i> Añadir</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="tab-content text-muted">
+                        <div class="tab-pane active" id="overview-tab" role="tabpanel">
+                            <div class="row">
+                                <div class="col-xxl-4">
+                                    <div class="card">
+                                        <div class="card-body pt-3">
+                                            <div class="card-body rounded-3 pb-3">
+                                                <h3 style="text-align: center;padding-bottom: 12px;">INFORMACIÓN</h3>
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <p class="mb-1"><b>CODIGO:</b></p>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <h6 class="text-truncate mb-2 font-weight-bold text-capitalize">{{ ani_codigo }}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <p class="mb-1"><b>ESPECIE:</b></p>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <h6 class="text-truncate mb-2 font-weight-bold text-capitalize">{{ esp_descri }}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <p class="mb-1"><b>RAZA:</b></p>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <h6 class="text-truncate mb-2 font-weight-bold text-capitalize">{{ anr_descri }}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <p class="mb-1"><b>SEXO:</b></p>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <h6 class="text-truncate mb-2 font-weight-bold text-capitalize">{{ ans_descri }}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <p class="mb-1"><b>EDAD:</b></p>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <h6 class="text-truncate mb-2 font-weight-bold text-capitalize">{{ ani_edadan }}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <p class="mb-1"><b>PESO:</b></p>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <h6 class="text-truncate mb-2 font-weight-bold text-capitalize">{{ ani_pesnet }}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <p class="mb-1"><b>ALTO:</b></p>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <h6 class="text-truncate mb-2 font-weight-bold text-capitalize">{{ ani_tamalt }}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <p class="mb-1"><b>LARGO:</b></p>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <h6 class="text-truncate mb-2 font-weight-bold text-capitalize">{{ ani_tamlar }}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <p class="mb-1"><b>ESTADO:</b></p>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <h6 class="text-truncate mb-0 font-weight-bold text-capitalize">{{ ani_estado }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-8">
+                                    <div class="card">
+                                        <div class="card-body pt-3">
+                                            <h3 style="text-align: center;padding-bottom: 12px;">PROPIETARIOS</h3>
+                                            <table id="tablaAplicacion" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover cell-border compact stripe">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th scope="col" class="text-center">N°</th>
+                                                        <th scope="col" class="text-center">NOMBRE</th>
+                                                        <th scope="col" class="text-center">CORREO</th>
+                                                        <th scope="col" class="text-center">T. DOC</th>
+                                                        <th scope="col" class="text-center">N° DOC</th>
+                                                        <th scope="col" class="text-center">TELÉFONO</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let data of dataAnimalPropietario;let idx = index"
+                                                        class="text-center">
+                                                        <td>{{idx + 1}}</td>
+                                                        <td>{{ data.per_nomcom }}</td>
+                                                        <td>{{ data.pec_correo }}</td>
+                                                        <td>{{ data.tdi_abrevi }}</td>
+                                                        <td>{{ data.per_numdoi }}</td>
+                                                        <td>{{ data.pet_numero }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <script>document.write(new Date().getFullYear())</script> © Hybrix.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end d-none d-sm-block">
+                        Design & Develop by Themesbrand
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div> 
+
+<ng-template #AsignarAnimalPropietario>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left"> <i class="pe-7s-plus btn-icon-wrapper"> </i> Asignar Propietario</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef?.hide()"
+            id="closeModal">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="col-lg-12">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <select class="form-select" [(ngModel)]="p_tdi_id" data-choices-sorting="true">
+                                <option selected="" value="0">Seleccione...</option>
+                                <option *ngFor="let data of datosTipoDocumento"
+                                value="{{data.tdi_id}}">{{data.tdi_descri}}</option>
+                            </select>
+                            <label>Tipo de Documento</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                                <input type="text" class="form-control" [(ngModel)]="p_tdi_numero" (blur)="buscarPropietario()" (keypress)="validarNumero($event)">
+                                <label>N° de Documento</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 mt-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-floating">
+                            <input type="text" class="form-control form-control-sm" [(ngModel)]="p_per_nombre" style="background: #ebf0f5; font-size: 16px;" disabled>
+                            <label>Nombres</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 mt-2">
+                <div class="row">
+                    <div class="col-md-12 text-end">
+                        <button (click)="guardarRegistro()" type="button" class="btn btn-primary"
+                            style="margin-right: 5px;"> <i class=""></i>Registrar</button>
+                        <button type="button" class="btn btn-danger" (click)="CerrarModal()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
