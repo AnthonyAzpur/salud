@@ -120,7 +120,7 @@ export class CertificadoComponent implements OnInit {
   setTodayDate() {
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0];
-  
+
     this.p_cer_fecini = formattedDate;
     this.p_cer_fecfin = formattedDate;
   }
@@ -345,7 +345,7 @@ export class CertificadoComponent implements OnInit {
             }
           });
       }
-    })    
+    })
   }
 
   AnularCertificado(cer_id:number){
@@ -432,7 +432,7 @@ export class CertificadoComponent implements OnInit {
       }
     });
   }
-  
+
   RoutesNavigateDuplicarCertificado(tdi_id : number,per_numdoi : number,car_id : number) {
     this.router.navigate(["/certificado/duplicar-certificado/" + tdi_id +"/"+ per_numdoi+"/"+ car_id]);
   }

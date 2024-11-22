@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { AdministracionService } from 'src/app/services/administracion.service';
+import { Router } from '@angular/router'; // Importar Router para manejar la navegación
 
 @Component({
   selector: 'app-navbar',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  // Variables para almacenar datos del usuario
   usu_apemat: string | null = "";
   usu_apepat: string | null = "";
   usu_id: string | null = "";
@@ -14,26 +15,44 @@ export class NavbarComponent implements OnInit {
   usu_nombre: string | null = "";
   usu_nomcom: string | null = "";
 
-  layoutModeIcon: string = 'sun';
-  dataEmpresas: any = [];
+  layoutModeIcon: string = 'sun'; // Icono para el tema (modo claro/oscuro)
+  dataEmpresas: any = []; // Datos de empresas si se necesitan
 
-  constructor() { }
+  // Inyectar el Router en el constructor para poder usarlo
+  constructor(private router: Router) { }
 
-  ngOnInit(){
-    this.getdataUsuario();
+  ngOnInit() {
+    this.getdataUsuario(); // Obtener los datos del usuario
+
+    // Verificar si el usuario está autenticado
+    if (!this.usu_id) {
+      this.router.navigate(['/login']); // Si no está autenticado, redirigir al login
+    }
+
+    // Aplicar el tema guardado en localStorage
+    const theme = localStorage.getItem('theme');
+    if (theme) {
+      this.changeLayoutMode(theme); // Aplicar el tema guardado
+    }
   }
+  
 
+  // Método que elimina los datos de la sesión y redirige al login
   delDatosSession() {
+    // Eliminar los datos de sesión del localStorage
     localStorage.removeItem("usu_apemat");
     localStorage.removeItem("usu_apepat");
     localStorage.removeItem("usu_id");
     localStorage.removeItem("usu_loging");
     localStorage.removeItem("usu_nombre");
     localStorage.removeItem("usu_nomcom");
+    localStorage.removeItem('session-dashboard');
 
-    window.location.href = "login";
+    // Redirigir al login usando Angular Router
+    this.router.navigate(['/login']);
   }
-  
+
+  // Método para obtener los datos del usuario desde localStorage
   getdataUsuario() {
     this.usu_apemat = localStorage.getItem("usu_apemat");
     this.usu_apepat = localStorage.getItem("usu_apepat");
@@ -43,11 +62,12 @@ export class NavbarComponent implements OnInit {
     this.usu_nomcom = localStorage.getItem("usu_nomcom");
   }
 
-  changeLayoutMode(mode: string){
+  // Método para cambiar el tema de la interfaz (modo claro/oscuro)
+  changeLayoutMode(mode: string) {
     let htmlSelector = document.getElementsByTagName('html')[0];
     let tableSelector = document.querySelectorAll('thead, tfoot');
 
-    if(mode == 'light'){
+    if (mode === 'light') {
       htmlSelector.setAttribute('data-topbar', 'light');
       htmlSelector.setAttribute('data-sidebar', 'light');
       htmlSelector.setAttribute('data-bs-theme', 'light');
@@ -58,7 +78,8 @@ export class NavbarComponent implements OnInit {
       });
 
       this.layoutModeIcon = 'sun';
-    }else{
+      localStorage.setItem('theme', 'light'); // Guardar la preferencia de tema
+    } else {
       htmlSelector.setAttribute('data-topbar', 'dark');
       htmlSelector.setAttribute('data-sidebar', 'dark');
       htmlSelector.setAttribute('data-bs-theme', 'dark');
@@ -69,29 +90,7 @@ export class NavbarComponent implements OnInit {
       });
 
       this.layoutModeIcon = 'moon';
+      localStorage.setItem('theme', 'dark'); // Guardar la preferencia de tema
     }
   }
-
-  // companyList(){
-  //   this.dataEmpresas = [];
-
-  //   let data = {
-  //     p_com_id: 0
-  //   }
-
-  //   this.administracionService.postGetCompanyList(data).subscribe({
-  //     next: (result: any) => {
-  //       console.log(result);
-  //       this.dataEmpresas = result;
-  //     },
-  //     error: (error: any) => {
-  //       console.error(error);
-  //     }
-  //   });
-  // }
-
-  setDefaultCompany(id: number){
-
-  }
-
 }

@@ -143,7 +143,7 @@
                         <div class="card-body">
                             <div>
                                 <table id="tablaAplicacion" datatable [dtOptions]="dtOptions"
-                                [dtTrigger]="dtTrigger" class="row-border hover cell-border compact stripe" style="width: 100%;">
+                                [dtTrigger]="dtTrigger" class="row-border hover cell-border compact stripe" >
                                     <thead class="table-light">
                                         <tr>
                                             <th scope="col" class="text-center">N°C</th>
@@ -177,11 +177,11 @@
                                             <td>{{ data.car_fecven }}</td>
                                             <td>{{ data.esd_descri }}</td>
                                             <td>
-                                                <button type="button" title="CAMBIAR DE ESTADO" (click)="openModalWithEstado(ChangeEstado,data)" class="btn btn-warning btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="bi bi-eye fs-10"></i></button>
-                                                <button type="button" title="IMPRIMIR DATOS" *ngIf="data.car_estado == 'ACTIVO'" (click)="openModalWithClass(Imprimir,data)" class="btn btn-primary btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="bi bi-eye fs-10"></i></button>
-                                                <button type="button" title="ENVIAR CORREO" *ngIf="data.car_estado == 'ACTIVO' && data.car_correo !== null" (click)="SendCorreoCarnet(data)" class="btn btn-success btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="ri ri-mail-line fs-10" ></i></button>
-                                                <button type="button" title="ANULAR" *ngIf="data.car_estado == 'ACTIVO'" (click)="AnularCarnet(data.car_id)" class="btn btn-danger btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="ri ri-close-circle-line fs-10"></i></button>
-                                                <button type="button" title="RENOVAR" *ngIf="data.car_estado == 'ACTIVO'" (click)="RoutesNavigateDuplicarCarne(data.tdi_id,data.per_numdoi,data.car_id)" class="btn btn-info btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="ri ri-close-circle-line fs-10"></i></button>
+                                                <button type="button" title="CAMBIAR DE ESTADO" (click)="openModalWithEstado(ChangeEstado,data)" class="me-1 mt-1 mb-1 btn btn-warning btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="bi bi-eye fs-10"></i></button>
+                                                <button type="button" title="IMPRIMIR DATOS" *ngIf="data.car_estado == 'ACTIVO'" (click)="openModalWithClass(Imprimir,data)" class="me-1 mt-1 mb-1 btn btn-primary btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="bi bi-eye fs-10"></i></button>
+                                                <button type="button" title="ENVIAR CORREO" *ngIf="data.car_estado == 'ACTIVO' && data.car_correo !== null" (click)="SendCorreoCarnet(data)" class="me-1 mt-1 mb-1 btn btn-success btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="ri ri-mail-line fs-10" ></i></button>
+                                                <button type="button" title="ANULAR" *ngIf="data.car_estado == 'ACTIVO'" (click)="AnularCarnet(data.car_id)" class="mt-1 mb-1 btn btn-danger btn-sm me-1" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="ri ri-close-circle-line fs-10"></i></button>
+                                                <button type="button" title="RENOVAR" *ngIf="data.car_estado == 'ACTIVO'" (click)="RoutesNavigateDuplicarCarne(data.tdi_id,data.per_numdoi,data.car_id)" class="me-1 btn btn-info btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="ri ri-close-circle-line fs-10"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>

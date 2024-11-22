@@ -60,7 +60,7 @@
         border: 1px solid #b9b9b9 !important;
     }
 </style>
-<div class="main-content">
+<div class="main-content ">
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
@@ -76,7 +76,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" >
                 <div class="col-lg-12">
                     <div class="card p-2">
                         <div class="card-body">
@@ -137,7 +137,7 @@
                                     <button type="button" [routerLink]="['/certificado/crear-certificado']" class="btn btn-info btn-label btn-sm"><i class="mdi mdi-plus label-icon align-middle fs-16 me-2"></i> Nuevo</button>
                                 </div>
                                 <div class="col-sm-auto">
-                                    <button type="button" class="btn btn-success btn-label btn-sm" id="ExportarExcel" (click)="descargaExcel()"><i class="ri-markup-line label-icon align-middle fs-16 me-2"></i> Excel</button>
+                                    <button type="button" class="btn btn-success btn-label btn-sm" id="ExportarExcel" (click)="descargaExcel()"><i class="bi bi-filetype-xlsx label-icon align-middle fs-16 me-2"></i> Excel</button>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +166,7 @@
                                             <th scope="col" class="text-center">EMITIDO</th>
                                             <th scope="col" class="text-center">VENCE</th>
                                             <th scope="col" class="text-center">ESTADO</th>
-                                            <th scope="col" class="text-center">ACCIONES</th>
+                                            <th scope="col" class="text-center ">ACCIONES</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -186,12 +186,28 @@
                                             <td>{{ data.cer_fecven }}</td>
                                             <td>{{ data.esd_descri }}</td>
                                             <td>
-                                                <button type="button" title="CAMBIAR DE ESTADO" (click)="openModalWithEstado(ChangeEstado,data)" class="btn btn-warning btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="bi bi-eye fs-10"></i></button>
-                                                <button type="button" title="IMPRIMIR DATOS" *ngIf="data.cer_estado == 'ACTIVO'" (click)="openModalWithClass(Imprimir,data)" class="btn btn-primary btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="bi bi-eye fs-10"></i></button>
-                                                <button type="button" title="ENVIAR CORREO" *ngIf="data.cer_estado == 'ACTIVO' && data.pec_correo !== null" (click)="SendCorreoCertificado(data)" class="btn btn-success btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="ri ri-mail-line fs-10" ></i></button>
-                                                <button type="button" title="ANULAR" *ngIf="data.cer_estado == 'ACTIVO'" (click)="AnularCertificado(data.cer_id)" class="btn btn-danger btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="ri ri-close-circle-line fs-10"></i></button>
-                                                <button type="button" title="RENOVAR" *ngIf="data.cer_estado == 'ACTIVO'" (click)="RoutesNavigateDuplicarCertificado(data.tdi_id,data.per_numdoi,data.cer_id)" class="btn btn-info btn-sm" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;"><i class="ri ri-close-circle-line fs-10"></i></button>
-                                            </td>
+                                              <button type="button" title="CAMBIAR DE ESTADO" (click)="openModalWithEstado(ChangeEstado,data)" class="mt-1 mb-1 btn btn-warning btn-sm me-1 " style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;">
+                                                  <i class="bi bi-eye fs-10"></i>
+                                              </button>
+                                              <button type="button" title="IMPRIMIR DATOS" *ngIf="data.cer_estado == 'ACTIVO'" (click)="openModalWithClass(Imprimir,data)" class="mb-1 mt-1 btn btn-primary btn-sm me-1" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;">
+                                                  <i class="bi bi-printer  fs-10"></i>
+                                              </button>
+                                              <button type="button" title="ENVIAR CORREO" *ngIf="data.cer_estado == 'ACTIVO' && data.pec_correo !== null" (click)="SendCorreoCertificado(data)" class="mt-1 mb-1 btn btn-success btn-sm me-1" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;">
+                                                  <i class="ri ri-mail-line fs-10" ></i>
+                                              </button>
+                                              <button type="button" title="ANULAR" *ngIf="data.cer_estado == 'ACTIVO'" (click)="AnularCertificado(data.cer_id)" class="mt-1 mb-1 btn btn-danger btn-sm me-1" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;">
+                                                  <i class="bi bi-dash-circle fs-10"></i>
+
+                                              </button>
+                                              <button type="button" title="RENOVAR" *ngIf="data.cer_estado == 'ACTIVO'" (click)="RoutesNavigateDuplicarCertificado(data.tdi_id,data.per_numdoi,data.cer_id)" class=" mb-1 mt-1 btn btn-info btn-sm me-1" style="--tb-btn-padding-y: 0.000rem;--tb-btn-padding-x: 0.3rem;">
+                                                  <i class="bi bi-arrow-counterclockwise fs-10"></i>
+                                              </button>
+                                          </td>
+
+
+
+
+
                                         </tr>
                                     </tbody>
                                 </table>

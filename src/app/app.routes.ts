@@ -18,26 +18,27 @@ import { DuplicarCarneComponent } from './pages/duplicar-carne/duplicar-carne.co
 import { DuplicarCertificadoComponent } from './pages/duplicar-certificado/duplicar-certificado.component';
 
 export const ROUTES: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'logout', component: LogoutComponent, canActivate: [AuthGuard] },
-  { path: 'persona', component: PersonaComponent },
-  { path: 'persona/crear-persona', component: CrearPersonaComponent },
+  { path: 'login', component: LoginComponent },  // No protegido, acceso sin autenticación
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },  // Ruta protegida
+  { path: 'logout', component: LogoutComponent},   // Ruta no protegida
+  { path: 'persona', component: PersonaComponent, canActivate: [AuthGuard] },  // Ruta protegida
+  { path: 'persona/crear-persona', component: CrearPersonaComponent, canActivate: [AuthGuard] },  // Ruta protegida
 
-  { path: 'carne', component: CarneComponent },
-  { path: 'carne/crear-carne', component: CrearCarneComponent },
-  { path: 'carne/duplicar-carne/:tdi_id/:per_numdoi/:car_id', component: DuplicarCarneComponent },
+  { path: 'carne', component: CarneComponent, canActivate: [AuthGuard] },  // Ruta protegida
+  { path: 'carne/crear-carne', component: CrearCarneComponent, canActivate: [AuthGuard] },  // Ruta protegida
+  { path: 'carne/duplicar-carne/:tdi_id/:per_numdoi/:car_id', component: DuplicarCarneComponent, canActivate: [AuthGuard] },  // Ruta protegida
 
-  { path: 'certificado', component: CertificadoComponent },
-  { path: 'certificado/crear-certificado',component: CrearCertificadoComponent,},
-  { path: 'certificado/duplicar-certificado/:tdi_id/:per_numdoi/:cer_id', component: DuplicarCertificadoComponent },
+  { path: 'certificado', component: CertificadoComponent, canActivate: [AuthGuard] },  // Ruta protegida
+  { path: 'certificado/crear-certificado', component: CrearCertificadoComponent, canActivate: [AuthGuard] },  // Ruta protegida
+  { path: 'certificado/duplicar-certificado/:tdi_id/:per_numdoi/:cer_id', component: DuplicarCertificadoComponent, canActivate: [AuthGuard] },  // Ruta protegida
 
-  { path: 'mascota', component: MascotaComponent },
-  { path: 'mascota/crear-mascota', component: CrearMascotaComponent },
-  { path: 'propietario', component: PropietarioComponent },
-  { path: 'propietario/crear-propietario', component: CrearPropietarioComponent },
-  { path: 'animal/animal-propietario/:ani_id', component: AnimalPropietarioComponent },
+  { path: 'mascota', component: MascotaComponent, canActivate: [AuthGuard] },  // Ruta protegida
+  { path: 'mascota/crear-mascota', component: CrearMascotaComponent, canActivate: [AuthGuard] },  // Ruta protegida
 
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
-  { path: '**', pathMatch: 'full', redirectTo: 'login' },
+  { path: 'propietario', component: PropietarioComponent, canActivate: [AuthGuard] },  // Ruta protegida
+  { path: 'propietario/crear-propietario', component: CrearPropietarioComponent, canActivate: [AuthGuard] },  // Ruta protegida
+  { path: 'animal/animal-propietario/:ani_id', component: AnimalPropietarioComponent, canActivate: [AuthGuard] },  // Ruta protegida
+
+  { path: '', pathMatch: 'full', redirectTo: 'login' },  // Redirige a login si no se encuentra la ruta
+  { path: '**', pathMatch: 'full', redirectTo: 'login' },  // Redirige a login si la ruta no coincide
 ];

@@ -101,26 +101,26 @@ export class CarneComponent implements OnInit {
     this.listarOcupacion();
     this.listarEstadodocSel();
   }
-  
-  
+
+
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
-  
+
   ngAfterViewInit() {
     this.dtTrigger.next();
     console.log(this.dataTable);
     console.log(this.contenidoDiv);
   }
-  
+
   setTodayDate() {
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0];
-  
+
     this.p_car_fecini = formattedDate;
     this.p_car_fecfin = formattedDate;
   }
-  
+
   descargaExcel() {
     let btnExcel = document.querySelector('#tablaAplicacion_wrapper .dt-buttons .dt-button.buttons-excel.buttons-html5') as HTMLButtonElement;
     btnExcel.click();
@@ -133,7 +133,7 @@ export class CarneComponent implements OnInit {
     );
     this.dataprueba = data;
   }
-  
+
   openModalWithEstado(template: TemplateRef<any>,data:any) {
     this.modalRef = this.modalService.show(
       template,
@@ -214,7 +214,7 @@ export class CarneComponent implements OnInit {
       }
     });
   }
-  
+
   listarEstadodocSel() {
     let post = {};
     this.serviceSanidad.listarEstadodocSel(post).subscribe({
@@ -309,7 +309,7 @@ export class CarneComponent implements OnInit {
             }
           });
       }
-    })    
+    })
   }
 
   AnularCarnet(car_id:number){
@@ -348,14 +348,14 @@ export class CarneComponent implements OnInit {
       }
     })
   }
-  
+
   validarNumero(event: any): void {
     const keyCode = event.keyCode;
     if (keyCode < 48 || keyCode > 57) {
       event.preventDefault();
     }
   }
-  
+
   CambiarEstado(){
     const data_post = {
       p_car_id: this.estadodocar_id,
@@ -396,7 +396,7 @@ export class CarneComponent implements OnInit {
       }
     });
   }
-  
+
   RoutesNavigateDuplicarCarne(tdi_id : number,per_numdoi : number,car_id : number) {
     this.router.navigate(["/carne/duplicar-carne/" + tdi_id +"/"+ per_numdoi+"/"+ car_id]);
   }
