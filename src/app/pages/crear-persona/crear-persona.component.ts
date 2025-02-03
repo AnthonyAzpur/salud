@@ -25,6 +25,7 @@ export class CrearPersonaComponent implements OnInit {
   imageUrl: string | null = 'assets/images/avatardefault_92824.png';
   selectedFile: File | null = null;
   p_imgfot : string = '';
+  imagen : string= '';
 
   imagenseleccionada: File | null = null;
   imagenrecort: File | null = null;
@@ -408,12 +409,13 @@ export class CrearPersonaComponent implements OnInit {
 
   }
 
-  buscarRecurrente() {
+  buscarPropietario() {
     let post = {
       p_tdi_id: this.p_tdi_id,
       p_per_numdoi: this.p_tdi_numero
-    };  
-    this.sanidadService.listarRecurrente(post).subscribe({
+    };
+    this.spinner.show();
+    this.serviceMaster.ListarPersona(post).subscribe({
       next: (data: any) => {
         if (Object.keys(data).length > 0) {
           this.p_per_id = data[0]['per_id'];
@@ -421,45 +423,24 @@ export class CrearPersonaComponent implements OnInit {
           this.p_rec_apepat = data[0]['pen_apepat'];
           this.p_rec_apemat = data[0]['pen_apemat'];
           this.p_tge_id = data[0]['tge_id'];
-          //this.p_rec_correo = data[0]['pec_correo'];
-
+          this.p_rec_correo = data[0]['pec_correo'];
           if(data[0]['rec_telcel'] == "null"){
             this.p_rec_telcel = '';
           }else{
-            this.p_rec_telcel = data[0]['pet_numero'];
+            this.p_rec_telcel = data[0]['rec_telcel'];
           }
-          
-          if(data[0]['pec_correo'] == "null" || data[0]['pec_correo'] == null){
-            this.p_rec_correo = '';
-          }else{
-            this.p_rec_correo = data[0]['pec_correo'];
-          }
-
           this.p_rec_direcc = data[0]['dir_direcc'];
-
-          this.nom_img_temp = data[0]['rec_imgfot'];
-
-          this.imageUrl= 'http://172.17.1.56/files/salud/recurrente/'+data[0]['rec_imgfot'];
-
-          this.p_etb_direcc = data[0]['etb_direcc'];
-          
           this.p_pai_id = data[0]['pai_id'];
           this.p_ude_id = data[0]['ude_id'];
-          
-          (<HTMLInputElement>document.getElementById('datoRubro')).value = data[0]['act_descri'];
-          (<HTMLInputElement>document.getElementById('datoOcupacion')).value = data[0]['ocu_descri'];
-          (<HTMLInputElement>document.getElementById('datoEstablecimientos')).value = data[0]['etb_nombre'];
-
           setTimeout(() => {
             this.listarProvincias();
             this.p_upr_id = data[0]['upr_id'];
             setTimeout(() => {
               this.listarDistritos();
               this.p_udi_id = data[0]['udi_id'];
-            }, 3000);
-          }, 1500);
+            }, 1000);
+          }, 1000);
           this.spinner.hide();
-
         } else {
           this.buscarPersona();
         }
@@ -470,7 +451,6 @@ export class CrearPersonaComponent implements OnInit {
       }
     });
   }
-
   buscarPersona() {
     let post = {
       p_tdi_id: this.p_tdi_id,
@@ -488,6 +468,7 @@ export class CrearPersonaComponent implements OnInit {
           this.p_rec_correo = data[0]['pen_correo'];
           this.p_rec_telcel = data[0]['pen_numtel'];
           this.p_rec_direcc = data[0]['dir_direcc'];
+          this.buscarPersonaPide();
           this.spinner.hide();
         } else {
           this.buscarPersonaPide();
@@ -501,36 +482,37 @@ export class CrearPersonaComponent implements OnInit {
   }
 
   buscarPersonaPide() {
-    let post = {
-      dni: this.p_tdi_numero,
-      usuario: 75346505,
-      app: 1
-    };
-    this.serviceMaster.buscarPersonaPide(post).subscribe({
-      next: (data: any) => {
-          if (data['consultarResponse']['return']['coResultado'] === '0000') {
-            let response = data['consultarResponse']['return']['datosPersona'];
-            console.log(response);
-            this.p_rec_nombre = response['prenombres'];
-            this.p_rec_apepat = response['apPrimer'];
-            this.p_rec_apemat = response['apSegundo'];
-            this.p_rec_direcc = response['direccion'];
-            this.spinner.hide();
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Ocurrió un error, por favor registre los datos de manera manual.",
-            });
-          }
-          this.spinner.hide();
-      },
-      error: (error: any) => {
-        console.log(error);
-      }
-    });
-  }
-
+     let post = {
+       dni: this.p_tdi_numero,
+       usuario: 75346505,
+       app: 1
+     };
+     this.serviceMaster.buscarPersonaPide(post).subscribe({
+       next: (data: any) => {
+           if (data['consultarResponse']['return']['coResultado'] === '0000') {
+             let response = data['consultarResponse']['return']['datosPersona'];
+             console.log(response);
+             this.p_rec_nombre = response['prenombres'];
+             this.p_rec_apepat = response['apPrimer'];
+             this.p_rec_apemat = response['apSegundo'];
+             this.p_rec_direcc = response['direccion'];
+             this.imagen = response['foto'];
+             this.imageUrl = 'data:image/png;base64, '+response['foto'];
+             this.spinner.hide();
+           } else {
+             Swal.fire({
+               icon: "error",
+               title: "Oops...",
+               text: "Ocurrió un error, por favor registre los datos de manera manual.",
+             });
+           }
+           this.spinner.hide();
+       },
+       error: (error: any) => {
+         console.log(error);
+       }
+     });
+   }
   guardarRecurrente() {
     console.log(this.p_tdi_numero.length);
     console.log(this.p_rec_correo);

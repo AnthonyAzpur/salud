@@ -457,22 +457,35 @@ export class CrearPropietarioComponent implements OnInit {
       p_tdi_id: this.p_tdi_id,
       p_per_numdoi: this.p_tdi_numero
     };
-    this.serviceMaster.buscarPersonaBus(post).subscribe({
+    this.spinner.show();
+    this.serviceMaster.ListarPersona(post).subscribe({
       next: (data: any) => {
         if (Object.keys(data).length > 0) {
-          console.log(data);
           this.p_per_id = data[0]['per_id'];
           this.p_rec_nombre = data[0]['pen_nombre'];
           this.p_rec_apepat = data[0]['pen_apepat'];
           this.p_rec_apemat = data[0]['pen_apemat'];
           this.p_tge_id = data[0]['tge_id'];
-          this.p_rec_correo = data[0]['pen_correo'];
-          this.p_rec_telcel = data[0]['pen_numtel'];
+          this.p_rec_correo = data[0]['pec_correo'];
+          if(data[0]['rec_telcel'] == "null"){
+            this.p_rec_telcel = '';
+          }else{
+            this.p_rec_telcel = data[0]['rec_telcel'];
+          }
           this.p_rec_direcc = data[0]['dir_direcc'];
-          this.buscarPersonaPide();
+          this.p_pai_id = data[0]['pai_id'];
+          this.p_ude_id = data[0]['ude_id'];
+          setTimeout(() => {
+            this.listarProvincias();
+            this.p_upr_id = data[0]['upr_id'];
+            setTimeout(() => {
+              this.listarDistritos();
+              this.p_udi_id = data[0]['udi_id'];
+            }, 1000);
+          }, 1000);
           this.spinner.hide();
         } else {
-          this.buscarPersonaPide();
+          this.buscarPersona();
         }
 
       },

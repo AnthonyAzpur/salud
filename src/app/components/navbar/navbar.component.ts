@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router'; // Importar Router para manejar la navegación
 
 @Component({
@@ -16,10 +16,9 @@ export class NavbarComponent implements OnInit {
   usu_nomcom: string | null = "";
 
   layoutModeIcon: string = 'sun'; // Icono para el tema (modo claro/oscuro)
-  dataEmpresas: any = []; // Datos de empresas si se necesitan
 
-  // Inyectar el Router en el constructor para poder usarlo
-  constructor(private router: Router) { }
+  // Inyectar el Router y ChangeDetectorRef para actualizar la vista si es necesario
+  constructor(private router: Router, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.getdataUsuario(); // Obtener los datos del usuario
@@ -34,8 +33,10 @@ export class NavbarComponent implements OnInit {
     if (theme) {
       this.changeLayoutMode(theme); // Aplicar el tema guardado
     }
+
+    // Si los datos del usuario no están listos, forzar detección de cambios
+    this.cdr.detectChanges();
   }
-  
 
   // Método que elimina los datos de la sesión y redirige al login
   delDatosSession() {
@@ -52,7 +53,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  // Método para obtener los datos del usuario desde localStorage
+  // Método para obtener los datos del usuario desde el localStorage
   getdataUsuario() {
     this.usu_apemat = localStorage.getItem("usu_apemat");
     this.usu_apepat = localStorage.getItem("usu_apepat");
@@ -60,6 +61,19 @@ export class NavbarComponent implements OnInit {
     this.usu_loging = localStorage.getItem("usu_loging");
     this.usu_nombre = localStorage.getItem("usu_nombre");
     this.usu_nomcom = localStorage.getItem("usu_nomcom");
+
+    // Imprimir los datos en la consola para depuración
+    console.log("Apellido Materno:", this.usu_apemat);
+    console.log("Apellido Paterno:", this.usu_apepat);
+    console.log("ID Usuario:", this.usu_id);
+    console.log("Loging Status:", this.usu_loging);
+    console.log("Nombre:", this.usu_nombre);
+    console.log("Nombre Completo:", this.usu_nomcom);
+    
+    // Si no se tiene el nombre completo, redirigir al login
+    if (!this.usu_nomcom) {
+      this.router.navigate(['/login']);
+    }
   }
 
   // Método para cambiar el tema de la interfaz (modo claro/oscuro)
